@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">P2_Mobile</string>
+    <string name="app_name">P2 Mobile</string>
+    <string name="erro_servidor">Erro ao conectar com servidor</string>
 </resources>

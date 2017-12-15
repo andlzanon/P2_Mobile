@@ -1,4 +1,4 @@
-package zanon.andl.p2_mobile;
+package zanon.andl.p2;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
