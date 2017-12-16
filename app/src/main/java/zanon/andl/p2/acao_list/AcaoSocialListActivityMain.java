@@ -22,9 +22,7 @@ import zanon.andl.p2.entity.AcaoSocialEntity;
 
 public class AcaoSocialListActivityMain extends AppCompatActivity implements AcaoSocialListView {
 
-    //chave responsavel por salvar estado da activity
-    private final String EXTRA_SAVE = "lista_acoes";
-    //chave responsavel por passar objetos GameEntity entre activities
+    //chave responsavel por passar objetos Acao Social entity entre activities
     public final static String EXTRA_ACAOSOCIAL = "acao_social";
 
     //binding com butterknife
@@ -90,6 +88,7 @@ public class AcaoSocialListActivityMain extends AppCompatActivity implements Aca
             public void onClick(View view, int position) {
                 //caso algum elemento seja clicado passa-se o gameEntity para a proxima Activity
                 Intent intent = new Intent(AcaoSocialListActivityMain.this, AcaoSocialDetailActivity.class);
+                intent.putExtra(EXTRA_ACAOSOCIAL, asList.get(position));
                 startActivity(intent);
             }
         });

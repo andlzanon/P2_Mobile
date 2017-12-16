@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">P2 Mobile</string>
     <string name="erro_servidor">Erro ao conectar com servidor</string>
+    <string name="ir_site">Ir para o site</string>
 </resources>

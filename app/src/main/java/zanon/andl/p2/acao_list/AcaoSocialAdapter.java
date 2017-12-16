@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.util.List;
 
@@ -53,6 +54,7 @@ public class AcaoSocialAdapter extends RecyclerView.Adapter<AcaoSocialAdapter.Ac
 
     private List<AcaoSocialEntity> asList;
     private Context context;
+    private Target target;
 
     /**
      * Construtor para o Adapter
@@ -83,7 +85,7 @@ public class AcaoSocialAdapter extends RecyclerView.Adapter<AcaoSocialAdapter.Ac
      * @param position posicao do holder, ou seja em que posicao da lista sera exibido
      */
     @Override
-    public void onBindViewHolder(AcaoSocialViewHolder holder, int position) {
+    public void onBindViewHolder(final AcaoSocialViewHolder holder, final int position) {
         AcaoSocialEntity acaoSocialEntity  = asList.get(position);
         holder.txtNome.setText(acaoSocialEntity.getName());
         Picasso.with(context)

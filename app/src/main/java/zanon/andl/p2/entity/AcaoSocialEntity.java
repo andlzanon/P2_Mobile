@@ -4,7 +4,9 @@ package zanon.andl.p2.entity;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class AcaoSocialEntity {
+import java.io.Serializable;
+
+public class AcaoSocialEntity implements Serializable {
 
     @SerializedName("id")
     @Expose

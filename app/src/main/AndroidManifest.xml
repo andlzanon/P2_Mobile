@@ -3,6 +3,7 @@
     package="zanon.andl.p2">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -11,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeNoActionBar">
+
         <activity android:name=".acao_list.AcaoSocialListActivityMain">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,11 +20,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".acao_detail.AcaoSocialDetailActivity">
+
+        <activity android:name=".acao_detail.AcaoSocialDetailActivity"
+            android:parentActivityName=".acao_list.AcaoSocialListActivityMain">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".acao_list.AcaoSocialListActivityMain" />
         </activity>
+
     </application>
 
 </manifest>
