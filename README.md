@@ -5,10 +5,10 @@
 # Apresentação
   
 	Aplicativo Android que acessa dados de acões sociais da web por meio de um arquivo JSON e exibê-os em uma RecyclerView. 
-	Ao clicar em um item na tela de detalhes é aberta uma tela de descrição com um texto sobre o que é feito e um botão que leva ao site do item clicado.
-  Sempre que o aplicativo entra na internet todos os dados são salvos em um bando de dados SQLite. 
-  Os dados do BD só são acessados se o usuário está sem internet. 
-  Se entrar novamente, o banco de dados é inteiramente deletado, os dados sao importados da internet via JSON e são salvos novamente no BD.
+	Ao clicar em um item na tela de detalhes é aberta uma tela de descrição com um texto sobre o que é feito e um botão que leva ao 	site do item clicado.
+  	Sempre que o aplicativo entra na internet todos os dados são salvos em um bando de dados SQLite. 
+  	Os dados do BD só são acessados se o usuário está sem internet. 
+  	Se entrar novamente, o banco de dados é inteiramente deletado, os dados sao importados da internet via JSON e são salvos novamente no BD.
 
 	O projeto foi implementado no padrão de desenvolvimento Model View Presenter.
 
