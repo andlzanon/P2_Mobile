@@ -19,4 +19,8 @@ public interface AcaoSocialListView {
     public void initProgressBar();
     //para a animacao da progressBar
     public void stopProgressBar();
+    //para acessar todos os objetos que estao no BD
+    public void BDparaLista();
+    //para passar os dados do BD para a lista
+    public void ListaparaRecycler();
 }

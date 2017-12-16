@@ -74,16 +74,11 @@ public class AcaoSocialListActivityMain extends AppCompatActivity implements Aca
         );
         mRecyclerView.addItemDecoration(mDividerItemDecoration);
 
+        //variavel online verifica se celular esta online
         boolean online = isOnline();
-
-        if(online){
-            presenter = new AcaoSocialListPresenter(this);
-            presenter.acessaDados();
-            Log.d("Passando", "Aqui");
-        }
-        else{
-            acessaDadosDoBD();
-        }
+        //inicializa presenter
+        presenter = new AcaoSocialListPresenter(this);
+        presenter.BDouInternet(online);
     }
 
     /**
@@ -97,31 +92,36 @@ public class AcaoSocialListActivityMain extends AppCompatActivity implements Aca
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
-    public void acessaDadosDoBD(){
-
+    @Override
+    public void BDparaLista(){
+        //esconde a progress bar
         stopProgressBar();
+        //cria instancia do helper por meio do repositorio
         AcaoSocialRepositorio repositorio = new AcaoSocialRepositorio(this);
+        //coloca lista do bd na lista aslist
         repositorio.listaAcoes(asList);
+        //verifica se a lista esta vazia, ou seja se
+        //quando passa do BD para a lista nao existe nenhum elemento
+        //ou seja o BD esta vazio tbm
+        presenter.listaVazia(asList);
+    }
 
-        if(asList.size() == 0)
-            Toast.makeText(this, "Não existem dados salvos no BD, " +
-                    "Conecte-se a internet", Toast.LENGTH_SHORT).show();
-        else{
-            mAdapterAcoes = new AcaoSocialAdapter(asList, this);
-            mAdapterAcoes.setOnRecyclerItemClick(new OnRecyclerItemClick() {
-                @Override
-                public void onClick(View view, int position) {
-                    //caso algum elemento seja clicado passa-se o gameEntity para a proxima Activity
-                    Intent intent = new Intent(AcaoSocialListActivityMain.this, AcaoSocialDetailActivity.class);
-                    intent.putExtra(EXTRA_ACAOSOCIAL, asList.get(position));
-                    startActivity(intent);
-                }
-            });
-            mRecyclerView.setAdapter(mAdapterAcoes);
+    @Override
+    public void ListaparaRecycler(){
+        mAdapterAcoes = new AcaoSocialAdapter(asList, this);
+        mAdapterAcoes.setOnRecyclerItemClick(new OnRecyclerItemClick() {
+            @Override
+            public void onClick(View view, int position) {
+                //caso algum elemento seja clicado passa-se o gameEntity para a proxima Activity
+                Intent intent = new Intent(AcaoSocialListActivityMain.this, AcaoSocialDetailActivity.class);
+                intent.putExtra(EXTRA_ACAOSOCIAL, asList.get(position));
+                startActivity(intent);
+            }
+        });
 
-            mLayoutManager = new LinearLayoutManager(this);
-            mRecyclerView.setLayoutManager(mLayoutManager);
-        }
+        mRecyclerView.setAdapter(mAdapterAcoes);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
     }
 
     /**

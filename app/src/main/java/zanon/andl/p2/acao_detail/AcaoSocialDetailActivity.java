@@ -20,6 +20,7 @@ import static zanon.andl.p2.acao_list.AcaoSocialListActivityMain.EXTRA_ACAOSOCIA
 
 public class AcaoSocialDetailActivity extends AppCompatActivity {
 
+    //instanciacoes dos elementos
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -41,24 +42,29 @@ public class AcaoSocialDetailActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        //recebe os tipos passados por intent
         Intent intent = getIntent();
         acaoSocialEntity = (AcaoSocialEntity) intent.getSerializableExtra(EXTRA_ACAOSOCIAL);
 
+        //seta a toobar e a parent activity
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(acaoSocialEntity.getName());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        //carrega imagem
         Picasso.with(this)
                 .load(acaoSocialEntity.getImage())
                 .centerCrop()
                 .fit()
                 .into(circleImageView);
 
+        //seta textviews
         nomeDescAs.setText(acaoSocialEntity.getName());
         descricaoAs.setText(acaoSocialEntity.getDescription());
     }
 
+    //define o click no botao com uma intent para abrir o navegador
     @OnClick(R.id.button_site)
     public void onClickButtonSite(){
         Uri uri = Uri.parse(acaoSocialEntity.getSite());

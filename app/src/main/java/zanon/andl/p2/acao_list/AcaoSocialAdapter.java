@@ -58,7 +58,7 @@ public class AcaoSocialAdapter extends RecyclerView.Adapter<AcaoSocialAdapter.Ac
 
     /**
      * Construtor para o Adapter
-     * @param asList lista de Games
+     * @param asList lista de Acoes
      * @param context contexto da activity
      */
     public AcaoSocialAdapter(List<AcaoSocialEntity> asList, Context context){

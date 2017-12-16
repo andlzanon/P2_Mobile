@@ -1,10 +1,11 @@
 package zanon.andl.p2.acao_list;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import zanon.andl.p2.R;
-import zanon.andl.p2.entity.AcaoSocialEntity;
 import zanon.andl.p2.entity.AcaoSocialListEntity;
 import zanon.andl.p2.network.AcaoSocialApi;
 
@@ -24,6 +25,34 @@ public class AcaoSocialListPresenter {
      */
     public AcaoSocialListPresenter(AcaoSocialListView acaoSocialListView){
         this.acaoSocialListView = acaoSocialListView;
+    }
+
+    /**
+     *
+     * @param conectado variavel que representa se celular esta ou nao conectado
+     */
+    public void BDouInternet(Boolean conectado){
+        if(conectado){
+            acessaDados();
+        }
+        else{
+            acaoSocialListView.BDparaLista();
+        }
+    }
+
+    /**
+     * verifica se lista e consequentemente BD esta vazio
+     * @param list
+     */
+    public void listaVazia(List list){
+        //se esta vazio mostra mensagem de erro
+        if(list.size() == 0){
+            acaoSocialListView.mensagemDeErro(acaoSocialListView.getTextFromR(R.string.erro_bd));
+        }
+        //senao mostra lista na recycler
+        else{
+            acaoSocialListView.ListaparaRecycler();
+        }
     }
 
     /**
