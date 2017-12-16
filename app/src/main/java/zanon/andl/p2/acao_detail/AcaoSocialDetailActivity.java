@@ -32,9 +32,7 @@ public class AcaoSocialDetailActivity extends AppCompatActivity {
     @BindView(R.id.descricaoAs)
     TextView descricaoAs;
 
-    public static final String EXTRA_URLSITE = "url_site";
-    public static final String EXTRA_NOME = "nome";
-    AcaoSocialEntity acaoSocialEntity;
+    private AcaoSocialEntity acaoSocialEntity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

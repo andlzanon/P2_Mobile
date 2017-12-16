@@ -24,6 +24,14 @@ public class AcaoSocialEntity implements Serializable {
     @Expose
     private String site;
 
+    public AcaoSocialEntity(Integer id, String name, String image, String description, String site) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
+        this.description = description;
+        this.site = site;
+    }
+
     public Integer getId() {
         return id;
     }

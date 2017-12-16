@@ -1,12 +1,16 @@
 package zanon.andl.p2.acao_list;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -18,6 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import zanon.andl.p2.R;
 import zanon.andl.p2.acao_detail.AcaoSocialDetailActivity;
+import zanon.andl.p2.database.AcaoSocialRepositorio;
 import zanon.andl.p2.entity.AcaoSocialEntity;
 
 public class AcaoSocialListActivityMain extends AppCompatActivity implements AcaoSocialListView {
@@ -69,8 +74,54 @@ public class AcaoSocialListActivityMain extends AppCompatActivity implements Aca
         );
         mRecyclerView.addItemDecoration(mDividerItemDecoration);
 
-        presenter = new AcaoSocialListPresenter(this);
-        presenter.acessaDados();
+        boolean online = isOnline();
+
+        if(online){
+            presenter = new AcaoSocialListPresenter(this);
+            presenter.acessaDados();
+            Log.d("Passando", "Aqui");
+        }
+        else{
+            acessaDadosDoBD();
+        }
+    }
+
+    /**
+     * verifica se celular esta online
+     * @return se celular esta online
+     */
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
+    public void acessaDadosDoBD(){
+
+        stopProgressBar();
+        AcaoSocialRepositorio repositorio = new AcaoSocialRepositorio(this);
+        repositorio.listaAcoes(asList);
+
+        if(asList.size() == 0)
+            Toast.makeText(this, "Não existem dados salvos no BD, " +
+                    "Conecte-se a internet", Toast.LENGTH_SHORT).show();
+        else{
+            mAdapterAcoes = new AcaoSocialAdapter(asList, this);
+            mAdapterAcoes.setOnRecyclerItemClick(new OnRecyclerItemClick() {
+                @Override
+                public void onClick(View view, int position) {
+                    //caso algum elemento seja clicado passa-se o gameEntity para a proxima Activity
+                    Intent intent = new Intent(AcaoSocialListActivityMain.this, AcaoSocialDetailActivity.class);
+                    intent.putExtra(EXTRA_ACAOSOCIAL, asList.get(position));
+                    startActivity(intent);
+                }
+            });
+            mRecyclerView.setAdapter(mAdapterAcoes);
+
+            mLayoutManager = new LinearLayoutManager(this);
+            mRecyclerView.setLayoutManager(mLayoutManager);
+        }
     }
 
     /**
@@ -81,6 +132,10 @@ public class AcaoSocialListActivityMain extends AppCompatActivity implements Aca
     public void atualizaLista(List<AcaoSocialEntity> lista) {
         //seta a lista da classe como a lista que vem da web
         asList = lista;
+
+        AcaoSocialRepositorio repositorio = new AcaoSocialRepositorio(this);
+        repositorio.excluiBD();
+        repositorio.inserirLista(asList);
 
         mAdapterAcoes = new AcaoSocialAdapter(asList, this);
         mAdapterAcoes.setOnRecyclerItemClick(new OnRecyclerItemClick() {
